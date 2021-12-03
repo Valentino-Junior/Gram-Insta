@@ -17,7 +17,7 @@ a{
     font-family: 'Gwendolyn', cursive;
     font-family: 'Lobster Two', cursive;
 }
-.img-responsive{
-  height:100px;
+#responsive{
+  height:50%;
   width:100px;
 }
