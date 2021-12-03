@@ -18,6 +18,6 @@ def profile(request):
     current_user = request.user
     pics = Images.objects.filter(user_id=current_user.id)
     profile = Profile.objects.filter(user_id=current_user.id).first()
-    return render(request, 'profile.html', {"pics": pics, "profile": profile})
+    return render(request, 'all-glam/home.html', {"pics": pics, "profile": profile})
 
 

@@ -21,3 +21,13 @@ a{
   height:50%;
   width:100px;
 }
+.prof{
+  height:50px;
+  width:50px;
+  border-radius: 50%;
+  
+}
+.container-fluid{
+  font-family: 'Gwendolyn', cursive;
+  font-family: 'Lobster Two', cursive;
+}

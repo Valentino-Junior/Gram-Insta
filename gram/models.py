@@ -13,6 +13,7 @@ class Images(models.Model):
     likes_count = models.IntegerField(default=0)
     comm_count = models.IntegerField(default=0)
     profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='image',null=True)
     def __str__(self):
         return self.name
 
@@ -38,7 +39,6 @@ class Images(models.Model):
         return images
     
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     prof_photo = CloudinaryField('image')
     bio = models.TextField(max_length=1000, blank=True, null=True)
     phone_number = models.CharField(max_length=10, blank=True, null=True)
@@ -65,7 +65,7 @@ class Likes(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user.id}:{self.image.id}'
+        return self.user
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -80,5 +80,5 @@ class Comments(models.Model):
         self.delete()
 
     def __str__(self):
-        return f'{self.user.id}:{self.image.id}'
+        return self.comm_date
 

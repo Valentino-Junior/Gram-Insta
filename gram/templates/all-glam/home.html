@@ -16,6 +16,15 @@
       </div> 
       {% endfor%}
     </div><hr>
+    <div class="col-md-6">
+      <div class="d-flex align-img-right">
+        {% if profile.prof_photo %}
+        <img class="prof" src="{{profile.prof_photo.url}}" alt="">
+        {%else%}
+        <img class="prof" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3aV6aq2LNho3SY8cDICGVEdRweW5u9IaZ_w&usqp=CAU" alt=""> 
+        {% endif %}   
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
