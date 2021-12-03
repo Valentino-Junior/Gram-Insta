@@ -9,3 +9,5 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     image = Images.objects.all().order_by('-id')
     return render(request, 'all-glam/home.html',{'image':image})
+
+
