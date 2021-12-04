@@ -42,6 +42,7 @@ class Profile(models.Model):
     prof_photo = CloudinaryField('image')
     bio = models.TextField(max_length=1000, blank=True, null=True)
     phone_number = models.CharField(max_length=10, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         return self.phone_number
