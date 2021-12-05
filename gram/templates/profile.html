@@ -1,7 +1,6 @@
 {% extends "all-glam/base.html" %}
 {% block content %}
-<section class="profile container">
-    <div class=" mt-5">
+<div class="container-fluid">
         <div class="row">
             <div class="col-md-3">
                 <div class="card">
@@ -29,6 +28,20 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
+        <div class="col-md-9">
+            <div class="row">
+                {% if success %}
+                <div class="alert alert-success" role="alert">
+                    {{ success }}
+                </div>
+                {% elif danger %}
+                <div class="alert alert-danger" role="alert">
+                    {{ danger }}
+                </div>
+                {% endif %}
+        <!-- Button trigger modal -->
+        <form action="/upload/pic/">
+            <input type="submit" value="Post a picture" />
+        </form>
+    
 {% endblock %}

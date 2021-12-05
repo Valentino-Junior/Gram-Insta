@@ -6,12 +6,12 @@
   <div class="row">
     <div class="col-md-6">
       {% for pic in image %}
-      <div class="card" style="width: 40rem;">
-        <img class="card-img-top" src="{{pic.image.url}}" alt="{{pic.name}}">
+      <div class="card" style="width: 25rem;">
+        <img class="card-img-top" height="500px"src="{{pic.image.url}}" alt="{{pic.name}}">
         <div class="card-body">
+          <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
           <h5 class="card-title">{{pic.name}}</h5>
           <p class="card-text">{{pic.caption}}</p>
-          <a href="#">{{pic.name}}</a>
         </div>
       </div> 
       {% endfor%}

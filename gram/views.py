@@ -1,9 +1,10 @@
-from django.shortcuts import render
-from .models import Images,Profile,Likes,Comments
+from django.shortcuts import render,redirect
+from .models import Images,Profile,Comments
 from django.contrib.auth.decorators import login_required
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from .forms import UploadPicForm
 
 
 
@@ -27,4 +28,16 @@ def profile(request):
     profile = Profile.objects.filter(user_id=current_user.id).first()
     return render(request, 'profile.html', {"pics": pics, "profile": profile})
 
-
+@login_required(login_url='/accounts/login/')
+def upload_pic(request):
+    current_user = request.user
+    profile = Profile.objects.get(user = current_user)
+    if request.method == "POST":
+        form = UploadPicForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.save()
+        return redirect('/')
+    else:
+        form = UploadPicForm()
+    return render(request, 'upload_pic.html', {"form": form})

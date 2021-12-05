@@ -1,16 +1,38 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
-from django.db.models.fields import related
 from django.contrib.auth.models import User
 
 
 # Create your models here
+class Profile(models.Model):
+    prof_photo = CloudinaryField('image')
+    bio = models.TextField(max_length=1000, blank=True, null=True)
+    phone_number = models.CharField(max_length=10, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
+
+    def __str__(self):
+        return self.bio
+
+    def save_profile(self):
+        self.save()
+
+    def update_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+    @classmethod
+    def get_profile_by_user(cls, user):
+        profile = cls.objects.filter(user=user)
+        return profile
+
 class Images(models.Model):
     image = CloudinaryField('image')
     name = models.CharField(max_length=50)
     caption = models.TextField(max_length=2000)
     pub_date = models.DateTimeField(auto_now_add=True,null=True)
-    likes_count = models.IntegerField(default=0)
+    likes = models.ManyToManyField(Profile, related_name="pics")
     comm_count = models.IntegerField(default=0)
     profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='image',null=True)
@@ -38,35 +60,7 @@ class Images(models.Model):
             image_name__icontains=search_term)
         return images
     
-class Profile(models.Model):
-    prof_photo = CloudinaryField('image')
-    bio = models.TextField(max_length=1000, blank=True, null=True)
-    phone_number = models.CharField(max_length=10, blank=True, null=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
 
-    def __str__(self):
-        return self.phone_number
-
-    def save_profile(self):
-        self.save()
-
-    def update_profile(self):
-        self.save()
-
-    def delete_profile(self):
-        self.delete()
-
-    @classmethod
-    def get_profile_by_user(cls, user):
-        profile = cls.objects.filter(user=user)
-        return profile
-
-class Likes(models.Model):
-    image = models.ForeignKey(Images, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.user
 
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
