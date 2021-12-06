@@ -2,9 +2,30 @@
 
 {% block content %}
 {{block.super}}
+<br>
 <div class="container-fluid">
   <div class="row">
     <div class="insta">
+      <div class="row img-steiraz">
+        <div class="col-md-2">
+            <img src="https://careerfodder.com/wp-content/uploads/2021/01/Azziad-Nasenya-6-819x1024.jpg" height="100px"width="95px"class="steiraz">
+        </div>
+        <div class="col-md-2">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkhbVGORbY8TeNdgUuBsDeIneW7ZShRM4esA&usqp=CAU" height="100px" width="95px"class="steiraz">
+      </div>
+      <div class="col-md-2">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuxnha6TWCtclFpSSAexuE0VsGPzBrJe0kNA&usqp=CAU" height="100px"width="95px"class="steiraz">
+    </div>
+    <div class="col-md-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMu7aKFLs4upGFS_yhGnohIrkCgbQmT9UgYA&usqp=CAU" height="100px"width="95px"class="steiraz">
+    </div>
+    <div class="col-md-2">
+      <img src="https://media.self.com/photos/59a7417ed0a3e87c2f5010ae/3:4/w_631,h_842,c_limit/Yara-Shahidi-Activism.jpg" height="100px"width="95px"class="steiraz">
+    </div>
+    <div class="col-md-2">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1_9_WirMcZuHqLSJmOlr6fVO_xOItPKxvVA&usqp=CAU" height="100px"width="95px"class="steiraz"><br><br>
+    </div>
+      </div>
       <div class="col-md-6">
         {% for pic in image %}
         <div class="card" style="width: 30rem;">
@@ -21,7 +42,7 @@
                 {% endif %}
               </form>
             </p>
-            <strong>{{pic.liked.all.count}}Like(s)</strong>
+            <strong>{{pic.like_count.all.count}}Like(s)</strong>
 
             <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
             <h5 class="card-title">{{username}}</h5>

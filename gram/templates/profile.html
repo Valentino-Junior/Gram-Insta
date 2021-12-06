@@ -34,5 +34,20 @@
                 </form>
         </div>
     </div>
+    <h3 id="posts">My posts</h3>
+        {% for pic in pics %}
+        <div class="col-md-12">
+            <div class="row">
+                <img src="{{ pics.image.url }}" class="img-responsive" alt="Image">
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-md-4">
+            <div class="alert alert-info" role="alert">
+                No images!
+            </div>
+        </div>
+        {% endfor %}
+
     
 {% endblock %}
