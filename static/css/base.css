@@ -35,5 +35,10 @@ a{
 #regis{
   font-family: 'Gwendolyn', cursive;
   font-family: 'Lobster Two', cursive;
-
+}
+.insta{
+  margin-left: 100px;
+}
+.side{
+  margin-left:350px;
 }

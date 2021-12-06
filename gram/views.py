@@ -54,3 +54,13 @@ def search_results(request):
     else:
         message = "Does not exist"
         return render(request, 'all-glam/search.html',{'warning':message})
+
+def comment(request, image_id):
+    image = Images.objects.get(pk=image_id)
+    brief= request.GET.get("comment")
+    print(brief)
+    user = request.user
+    comment = Comments( image = image,brief = brief, user = user)
+    comment.save_comment()
+
+    return redirect('/')

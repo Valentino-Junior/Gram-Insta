@@ -11,27 +11,50 @@
           <img class="card-img-top" height="550px"src="{{pic.image.url}}" alt="{{pic.name}}">
           <div class="card-body">
             <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
-            <h5 class="card-title">{{pic.name}}</h5>
+            <h5 class="card-title">{{username}}</h5>
             <p class="card-text">{{pic.caption}}</p>
+            {% for comment in comments %}
+                  {% if comment.image.id == image.id %}
+                  <div>
+                      <a href="#" class="likes"><em style="font-size: 1.2rem;">{{comment.user}}</em></a>
+                        <span class="post-link"><em style="font-size: 1.2rem;">{{comment.brief}}</em></span>
+                  </div>
+                  {% endif %}
+            {% endfor %}
+            <p class="card-text">Posted {{ pic.pub_date |timesince }} ago</p>
           </div>
+          <div class="card-footer" style="padding: 0;">
+            <form role="add_comment" , action="{% url 'comment' image_id=image.id %}">
+                {% csrf_token%}
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Add a comment" name="comment"
+                        style="font-size: 1.2rem; border: 0;">
+                    <div class="input-group-btn">
+                        <button class="btn" type="submit" style="font-size: 1.2rem;">Comment</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         </div> 
         {% endfor%}
       </div><hr>
     </div>
     <div class="col-md-6">
-      <div class="d-flex align-img-right">
-        {% if profile.prof_photo %}
-        <img src="{{user.prof_photo.url}}" alt="" class="card-img-top">
-        {%else%}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3aV6aq2LNho3SY8cDICGVEdRweW5u9IaZ_w&usqp=CAU" alt="My profile picture">
-        {% endif %} 
+      <div class="side">
+        <div class="d-flex align-img-right">
+          {% if profile.prof_photo %}
+          <img src="{{user.prof_photo.url}}" alt="" class="card-img-top">
+          {%else%}
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3aV6aq2LNho3SY8cDICGVEdRweW5u9IaZ_w&usqp=CAU" alt="My profile picture">
+          {% endif %} 
+        </div>
+        <p>{{ user.username }}</p>
+        <div class="row">
+          <form action="/upload/pic/">
+              <input type="submit" style=" background :linear-gradient(to left,#fd1d1d,#fcb045)"value="Post a picture" />
+          </form>
+        </div>
       </div>
-      <p>{{ user.username }}</p>
-      <div class="row">
-        <form action="/upload/pic/">
-            <input type="submit" style=" background :linear-gradient(to left,#fd1d1d,#fcb045)"value="Post a picture" />
-        </form>
-</div>
     </div>
   </div>
 </div>
