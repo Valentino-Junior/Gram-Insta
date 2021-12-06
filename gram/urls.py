@@ -1,13 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
 
+
 urlpatterns=[
-    url('^$',views.index,name = 'index'),
-    url(r'^profile/$', views.profile, name='profile'),
-    url(r'^upload/pic/$', views.upload_pic, name = "upload_pic"),
-    url(r'^search/', views.search_results, name='search_results'),
-    url(r'^comment/(?P<image_id>\d+)', views.comment,name = "comment"),
-
-
-
-]
+    path('',views.index,name = 'index'),
+    path('profile/', views.profile, name='profile'),
+    path('upload/pic/', views.upload_pic, name = "upload_pic"),
+    path('search/', views.search_results, name='search_results'),
+    path('like/', views.like_image, name='like_image'),
+    ]

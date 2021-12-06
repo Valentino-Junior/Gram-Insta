@@ -1,5 +1,6 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
+from django.db.models.fields import related
 from django.contrib.auth.models import User
 
 
@@ -11,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return self.bio
+        return self.phone_number
 
     def save_profile(self):
         self.save()
@@ -32,7 +33,7 @@ class Images(models.Model):
     name = models.CharField(max_length=50)
     caption = models.TextField(max_length=2000)
     pub_date = models.DateTimeField(auto_now_add=True,null=True)
-    likes = models.ManyToManyField(Profile, related_name="pics")
+    likes_count = models.ManyToManyField(Profile,related_name='pics',default=0)
     comm_count = models.IntegerField(default=0)
     profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='image',null=True)
@@ -59,8 +60,19 @@ class Images(models.Model):
         images = cls.objects.filter(name__icontains=search_term)
         return images
     
+LIKE_CHOICES={
+    ('Like','Like'),
+    ('Unlike','Unlike',)
+}
+class Likes(models.Model):
+    image = models.ForeignKey(Images, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.CharField(choices=LIKE_CHOICES,default='like',max_length=10)
 
+    def str(self):
+        return self.value
 
+    
 class Comments(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ForeignKey(Images, on_delete=models.CASCADE)
