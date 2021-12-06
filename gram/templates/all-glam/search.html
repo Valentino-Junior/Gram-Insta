@@ -1,0 +1,23 @@
+{%extends 'all-glam/base.html'%} 
+{% block content %}
+<div class="container">
+
+  <div class="row">
+      <h2>{{ warning }}</h2>
+      <h2>Found "{{message}}"</h2>
+
+  </div>
+
+  <div class="row">
+    {% for pics in images %}
+      <div class="col-sm-6">
+        <img height="300" width="400" src = '{{pics.image.url}}'>
+      </div>
+      <div class="col-sm-6">
+        <h2>{{pics.name}}</h2>
+        <p>{{pics.caption}}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

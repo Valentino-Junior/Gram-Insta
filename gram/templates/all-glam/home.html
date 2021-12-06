@@ -4,26 +4,34 @@
 {{block.super}}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-6">
-      {% for pic in image %}
-      <div class="card" style="width: 25rem;">
-        <img class="card-img-top" height="500px"src="{{pic.image.url}}" alt="{{pic.name}}">
-        <div class="card-body">
-          <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
-          <h5 class="card-title">{{pic.name}}</h5>
-          <p class="card-text">{{pic.caption}}</p>
-        </div>
-      </div> 
-      {% endfor%}
-    </div><hr>
+    <div class="insta">
+      <div class="col-md-6">
+        {% for pic in image %}
+        <div class="card" style="width: 30rem;">
+          <img class="card-img-top" height="550px"src="{{pic.image.url}}" alt="{{pic.name}}">
+          <div class="card-body">
+            <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
+            <h5 class="card-title">{{pic.name}}</h5>
+            <p class="card-text">{{pic.caption}}</p>
+          </div>
+        </div> 
+        {% endfor%}
+      </div><hr>
+    </div>
     <div class="col-md-6">
       <div class="d-flex align-img-right">
         {% if profile.prof_photo %}
-        <img class="prof" src="{{profile.prof_photo.url}}" alt="">
+        <img src="{{user.prof_photo.url}}" alt="" class="card-img-top">
         {%else%}
-        <img class="prof" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3aV6aq2LNho3SY8cDICGVEdRweW5u9IaZ_w&usqp=CAU" alt=""> 
-        {% endif %}   
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3aV6aq2LNho3SY8cDICGVEdRweW5u9IaZ_w&usqp=CAU" alt="My profile picture">
+        {% endif %} 
       </div>
+      <p>{{ user.username }}</p>
+      <div class="row">
+        <form action="/upload/pic/">
+            <input type="submit" style=" background :linear-gradient(to left,#fd1d1d,#fcb045)"value="Post a picture" />
+        </form>
+</div>
     </div>
   </div>
 </div>

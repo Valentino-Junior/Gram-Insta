@@ -6,8 +6,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mb-2 mb-lg-0">
         <div class="container-fluid search-form text-center">
-            <form class="d-flex" action="">
-                <input class="form-control me-2" type="search" name="search" placeholder="Search User" aria-label="Search">
+            <form class="d-flex" action="{% url 'search_results' %}">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search Image Name" aria-label="Search">
             </form>
         </div>
     </ul>

@@ -41,3 +41,16 @@ def upload_pic(request):
     else:
         form = UploadPicForm()
     return render(request, 'upload_pic.html', {"form": form})
+
+def search_results(request):
+
+    if 'images' in request.GET and request.GET["images"]:
+        search_term = request.GET.get("images")
+        images = Images.search_by_name(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all-glam/search.html',{"message":message,"images":images})
+
+    else:
+        message = "Does not exist"
+        return render(request, 'all-glam/search.html',{'warning':message})
