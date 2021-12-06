@@ -14,13 +14,15 @@
               <form action = "{% url 'like_image' %}"   method='POST'>
                 {% csrf_token %}
                 <input type="hidden" name="image_id" value="{{pic.id}}">
-                {%if user not in pic.likes_count.all %}
+                {%if user not in pic.like_count.all %}
                 <button class="btn btn-success" type="submit">like</button>
                 {% else %}
                  <button class="" type="submit">Un-like</button> 
                 {% endif %}
               </form>
             </p>
+            <strong>{{pic.liked.all.count}}Like(s)</strong>
+
             <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
             <h5 class="card-title">{{username}}</h5>
             <p class="card-text">{{pic.caption}}</p>

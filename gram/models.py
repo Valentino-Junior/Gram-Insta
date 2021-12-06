@@ -33,7 +33,7 @@ class Images(models.Model):
     name = models.CharField(max_length=50)
     caption = models.TextField(max_length=2000)
     pub_date = models.DateTimeField(auto_now_add=True,null=True)
-    likes_count = models.ManyToManyField(Profile,related_name='pics',default=0)
+    like_count = models.ManyToManyField(User,related_name='liked',default=0)
     comm_count = models.IntegerField(default=0)
     profile = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='image',null=True)
