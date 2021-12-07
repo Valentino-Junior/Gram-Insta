@@ -28,10 +28,11 @@
       </div>
       <div class="col-md-6">
         {% for pic in image %}
-        <div class = "" data-toggle ="modal" data-target="#showPicModal">
+        <div class = "" data-toggle ="modal" data-target="#showPicModal{{pic.id}}">
         <div class="card" style="width: 30rem;">
           <img class="card-img-top" height="550px"src="{{pic.image.url}}" alt="{{pic.name}}">
         </div>
+        </div> 
           <div class="card-body">
             <p class="card-text">
               <form action = "{% url 'like_image' %}"   method='POST'>
@@ -78,8 +79,8 @@
           </form>
           </div>
         </div>
-        </div> 
-        <div class="modal fade" id="showPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                          <!--Modal-->
+        <div class="modal fade" id="showPicModal{{pic.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered mode" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -126,6 +127,15 @@
               <input type="submit" style=" background :linear-gradient(to left,#fd1d1d,#fcb045)"value="Post a picture" />
           </form>
         </div>
+      </div><br>
+      <div class="suggested">
+        <h2>Suggested For You</h2>
+      {%for user in users%}
+      {{user.user.username}}
+      <img src="{{user.prof_photo.url}}" alt=""  class="prof">
+
+      {% endfor %}
       </div>
+
     </div>
 {% endblock %}

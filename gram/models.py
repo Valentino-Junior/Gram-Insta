@@ -12,7 +12,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return self.phone_number
+        return self.bio
 
     def save_profile(self):
         self.save()

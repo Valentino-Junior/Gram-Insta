@@ -13,17 +13,18 @@ from django.contrib.auth.models import User
 @login_required(login_url='/accounts/login/')
 def index(request):
     image = Images.objects.all().order_by('-id')
+    users = Profile.objects.all()
     if request.method == 'POST':  
         form = CommentForm(request.POST, request.FILES)
         if form.is_valid():
-            com = form.save(commit=False)
-            com.user = request.user
-            com.save()
+            comm = form.save(commit=False)
+            comm.user = request.user
+            comm.save()
             return redirect('index')
     
     else:
         form = CommentForm()
-    return render(request, 'all-glam/home.html',{'image':image,'form':form})
+    return render(request, 'all-glam/home.html',{'image':image,'form':form,'users':users})
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -98,3 +99,4 @@ def comments(request,image_id):
       comment.image = image
       comment.save() 
   return redirect('index')
+
