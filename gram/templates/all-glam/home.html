@@ -36,9 +36,9 @@
                 {% csrf_token %}
                 <input type="hidden" name="image_id" value="{{pic.id}}">
                 {%if user not in pic.like_count.all %}
-                <button class="btn btn-success" type="submit">like</button>
+                <a><i class="fa fa-heart"></i></a>               
                 {% else %}
-                 <button class="" type="submit">Un-like</button> 
+                <a><i class="fa fa-heart"></i></a>               
                 {% endif %}
               </form>
             </p>
