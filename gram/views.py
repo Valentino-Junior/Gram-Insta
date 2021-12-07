@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from .forms import UploadPicForm
+from .forms import UploadPicForm,CommentForm
 from django.contrib.auth.models import User
 
 
@@ -13,7 +13,17 @@ from django.contrib.auth.models import User
 @login_required(login_url='/accounts/login/')
 def index(request):
     image = Images.objects.all().order_by('-id')
-    return render(request, 'all-glam/home.html',{'image':image})
+    if request.method == 'POST':  
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            com = form.save(commit=False)
+            com.user = request.user
+            com.save()
+            return redirect('index')
+    
+    else:
+        form = CommentForm()
+    return render(request, 'all-glam/home.html',{'image':image,'form':form})
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
@@ -43,6 +53,7 @@ def upload_pic(request):
         form = UploadPicForm()
     return render(request, 'upload_pic.html', {"form": form})
 
+@login_required(login_url='/accounts/login/')
 def search_results(request):
 
     if 'search' in request.GET and request.GET["search"]:
@@ -56,6 +67,7 @@ def search_results(request):
         message = "You haven't searched for any item!"
         return render(request, 'all-glam/search.html',{'warning':message})
 
+@login_required(login_url='/accounts/login/')
 def like_image(request):
     user = request.user
     if request.method == 'POST':
@@ -73,36 +85,16 @@ def like_image(request):
                like.value = 'Like'
         like.save()
     return redirect('/')
-# def likes(request,id):
-#     user_like = Likes.objects.filter(image_id=id).first()
-#     if Likes.objects.filter(id=id,user_id=request.user.id).exists():
-#         user_like.delete()
-#         image = Images.objects.get(id)
-#         if image.likes_count==0:
-#             image.likes_count=0
-#             image.save()
-#         else:
-#             image.likes_count -=1
-#             image.save()
 
-#         return redirect('all-glam/home.html')
-    
-#     else:
-#         likes =Likes.objects.filter(image_id=id,user_id=request.user.id)
-#         likes.save_likes()
-#         image = Images.objects.get(id)
-#         image.likes_count = image.likes_count + 1
-#         image.save()
-         
-#         return redirect('all-glam/home.html')
-
-        
-# def comment(request, image_id):
-#     image = Images.objects.get(pk=image_id)
-#     brief= request.GET.get("comment")
-#     print(brief)
-#     user = request.user
-#     comment = Comments( image = image,brief = brief, user = user)
-#     comment.save_comment()
-
-#     return redirect('/')
+@login_required(login_url='/accounts/login/')
+def comments(request,image_id):
+  form = CommentForm()
+  image = Images.objects.filter(pk = image_id).first()
+  if request.method == 'POST':
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save(commit = False)
+      comment.user = request.user
+      comment.image = image
+      comment.save() 
+  return redirect('index')

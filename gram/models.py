@@ -40,6 +40,10 @@ class Images(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def saved_comments(self):
+        return self.comments.all()
+
     def update_caption(self, new_caption):
         self.image_caption = new_caption
         self.save()
@@ -72,19 +76,12 @@ class Likes(models.Model):
     def str(self):
         return self.value
 
-    
 class Comments(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ForeignKey(Images, on_delete=models.CASCADE)
-    comment = models.CharField(max_length=50)
-    comm_date = models.DateTimeField(auto_now_add=True)
+    comment = models.CharField(max_length=250)
+    image = models.ForeignKey(Images,on_delete = models.CASCADE,related_name='comments')
+    user = models.ForeignKey(User,on_delete = models.CASCADE,related_name='comments')
 
-    def save_comment(self):
-        self.save()
-    
-    def delete_comment(self):
-        self.delete()
-
-    def __str__(self):
-        return self.comm_date
-
+    @classmethod
+    def display_comment(cls,image_id):
+        comments = cls.objects.filter(image_id = image_id)
+        return comments

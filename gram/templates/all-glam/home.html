@@ -1,5 +1,5 @@
 {%extends 'all-glam/base.html'%}
-
+{% load bootstrap4 %}
 {% block content %}
 {{block.super}}
 <br>
@@ -36,38 +36,44 @@
                 {% csrf_token %}
                 <input type="hidden" name="image_id" value="{{pic.id}}">
                 {%if user not in pic.like_count.all %}
-                <a><i class="fa fa-heart"></i></a>               
+                <button class="btn-light" type="submit" style="border: none; margin-right: 63%;"><i
+                  class="far fa-heart text-dark"></i>
+                  <i class="fa fa-comment" aria-hidden="true"></i>
+              </button>
                 {% else %}
-                <a><i class="fa fa-heart"></i></a>               
+                <button class="btn-light" type="submit" style="border: none; margin-right: 70%;"><i
+                  class="far fa-heart text-danger"></i>
+                  <i class="fa fa-comment" aria-hidden="true"></i>
+                </button>
                 {% endif %}
               </form>
             </p>
             <strong>{{pic.like_count.all.count}}Like(s)</strong>
-
-            <p class="card-text"><i class="fas fa-comment fa-2x"></i></p>
             <h5 class="card-title">{{username}}</h5>
             <p class="card-text">{{pic.caption}}</p>
-            {% for comment in comments %}
-                  {% if comment.image.id == image.id %}
+              <div>
+                <p>COMMENTS:</p>
+                    {% for comment in pic.saved_comments %}
+  
+                    <p> <span><strong>{{comment.user}}</strong></span>: {{comment.comment}}</p>
+  
+                    {% endfor %}
+              </div>
                   <div>
-                      <a href="#" class="likes"><em style="font-size: 1.2rem;">{{comment.user}}</em></a>
-                        <span class="post-link"><em style="font-size: 1.2rem;">{{comment.brief}}</em></span>
+                      <a href="#" class="likes"><em style="font-size: 1.2rem;"></em></a>
+                        <span class="post-link"><em style="font-size: 1.2rem;"></em></span>
                   </div>
-                  {% endif %}
-            {% endfor %}
             <p class="card-text">Posted {{ pic.pub_date |timesince }} ago</p>
           </div>
           <div class="card-footer" style="padding: 0;">
-            <form role="add_comment" , action="">
-                {% csrf_token%}
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Add a comment" name="comment"
-                        style="font-size: 1.2rem; border: 0;">
-                    <div class="input-group-btn">
-                        <button class="btn" type="submit" style="font-size: 1.2rem;">Comment</button>
-                    </div>
-                </div>
-            </form>
+            <form action="{% url 'comments' image_id=pic.id%}" class="comment-form com" method="post"
+                  enctype="multipart/form-data">
+                  {% csrf_token%}
+                  {% bootstrap_form form %}
+                  <div class="form-group text-center">
+                      <input type="submit" class="btn btn-warning" value="Comment">
+                  </div>
+                  <input type="hidden" name="next" value="{{next}}">
         </div>
         </div> 
         {% endfor%}
