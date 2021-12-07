@@ -15,7 +15,11 @@ from decouple import config
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-import cloudinary_storage
+import django_heroku
+import dj_database_url
+
+
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +34,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'instagram.urls'
@@ -129,14 +135,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
 #Configuring cloudinary
 
 cloudinary.config(
@@ -145,10 +153,6 @@ cloudinary.config(
     api_secret=config('CD_SECRET'),
     secure = config('CD_SECURE')
 )
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME':config('CD_NAME'),
-    'API_KEY': config('CD_API'),
-    'API_SECRET':config('CD_SECRET'),
-    'SECURE':config('CD_SECURE')
-}
+LOGIN_URL = 'login'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
