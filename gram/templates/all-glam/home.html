@@ -28,8 +28,10 @@
       </div>
       <div class="col-md-6">
         {% for pic in image %}
+        <div class = "" data-toggle ="modal" data-target="#showPicModal">
         <div class="card" style="width: 30rem;">
           <img class="card-img-top" height="550px"src="{{pic.image.url}}" alt="{{pic.name}}">
+        </div>
           <div class="card-body">
             <p class="card-text">
               <form action = "{% url 'like_image' %}"   method='POST'>
@@ -52,8 +54,8 @@
             <h5 class="card-title">{{username}}</h5>
             <p class="card-text">{{pic.caption}}</p>
               <div>
-                <p>COMMENTS:</p>
-                    {% for comment in pic.saved_comments %}
+                <p><u>COMMENTS</u></p>
+                {% for comment in pic.saved_comments %}
   
                     <p> <span><strong>{{comment.user}}</strong></span>: {{comment.comment}}</p>
   
@@ -64,7 +66,6 @@
                         <span class="post-link"><em style="font-size: 1.2rem;"></em></span>
                   </div>
             <p class="card-text">Posted {{ pic.pub_date |timesince }} ago</p>
-          </div>
           <div class="card-footer" style="padding: 0;">
             <form action="{% url 'comments' image_id=pic.id%}" class="comment-form com" method="post"
                   enctype="multipart/form-data">
@@ -74,11 +75,41 @@
                       <input type="submit" class="btn btn-warning" value="Comment">
                   </div>
                   <input type="hidden" name="next" value="{{next}}">
+          </form>
+          </div>
         </div>
         </div> 
+        <div class="modal fade" id="showPicModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered mode" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalPictureTitle">{{pic.name}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img class="card-img-top" height="550px"src="{{pic.image.url}}" alt="{{pic.name}}">
+                <h5 class="card-title">{{username}}</h5>
+                <p class="card-text">{{pic.caption}}</p>
+                <div>
+                  <p><u>COMMENTS</u></p>
+                      {% for comment in pic.saved_comments %}
+    
+                      <p> <span><strong>{{comment.user}}</strong></span>: {{comment.comment}}</p>
+    
+                      {% endfor %}
+                </div>
+              </div>
+              <div class="modal-footer">
+                <p class="card-text">Posted {{ pic.pub_date |timesince }} ago</p>
+              </div>
+          </div>
+          </div>
+          </div>
         {% endfor%}
       </div><hr>
-    </div>
+    
     <div class="col-md-6">
       <div class="side">
         <div class="d-flex align-img-right">
