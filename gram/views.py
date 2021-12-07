@@ -48,7 +48,7 @@ def upload_pic(request):
         if form.is_valid():
             image = form.save(commit=False)
             image.save()
-        return redirect('all-glam/home.html')
+        return redirect('/')
     else:
         form = UploadPicForm()
     return render(request, 'upload_pic.html', {"form": form})

@@ -37,15 +37,15 @@ a{
   font-family: 'Lobster Two', cursive;
 }
 .insta{
-  margin-left: 50px;
+  margin-left: 30px;
 }
 .side{
-  margin-left:350px;
+  margin-left:50px;
   margin-top:5px;
 }
 #posts{
   text-align: center;
-  margin-left: 50px;
+  margin-left: 30px;
 }
 img:hover {
   /* Start the shake animation and make the animation last for 0.5 seconds */
