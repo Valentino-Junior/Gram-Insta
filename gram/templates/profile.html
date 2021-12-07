@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card">
                     {% if profile.prof_photo %}
                     <img src="{{profile.prof_photo.url}}" alt="" class="card-img-top">
@@ -28,13 +28,70 @@
                 </div>
             </div>
         
-        <div class="col-md-4">
+        <div class="col-md-3">
                 <form action="/upload/pic/">
                     <input type="submit" style=" background :linear-gradient(to left,#fd1d1d,#fcb045)"value="Post a picture" />
                 </form>
         </div>
-        </div>
+            <div class="col-md-3">
+                    <button type="button" class="btn btn-warning"style=" background :linear-gradient(to left,#fcb045,#fd1d1d)" data-bs-toggle="modal" data-bs-target="#profileModal">
+                        Update Profile
+                    </button>
+                    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="profileModalLabel">Update Profile</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'update_profile' %}" method="POST"
+                                        enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group mb-3">
+                                            <label for="name">First Name</label>
+                                            <input type="text" class="form-control" id="first_name"
+                                                name="first_name" value="{{ user.first_name }}">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="name">Last Name</label>
+                                            <input type="text" class="form-control" id="last_name"
+                                                name="last_name" value="{{ user.last_name }}">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="username">Username</label>
+                                            <input type="text" class="form-control" id="username"
+                                                name="username" value="{{ user.username }}">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="{{ user.email}}">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="bio">Bio</label>
+                                            <textarea name="bio" id="bio" cols="30" rows="10"
+                                                class="form-control">{{ profile.bio }}</textarea>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="profile_pic">Profile Picture</label>
+                                            <input type="file" class="form-control" id="profile_pic"
+                                                name="profile_pic" required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn">Update Profile</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
+</div>
+
     
     <h3 id="posts">My posts</h3>
         {% for pic in pics %}

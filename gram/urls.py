@@ -8,5 +8,7 @@ urlpatterns=[
     path('upload/pic/', views.upload_pic, name = "upload_pic"),
     path('search/', views.search_results, name='search_results'),
     path('like/', views.like_image, name='like_image'),
-    path('comments/<image_id>', views.comments,name='comments')
+    path('comments/<image_id>', views.comments,name='comments'),
+    path('profile/update/', views.update_profile, name='update_profile'),
+
     ]
