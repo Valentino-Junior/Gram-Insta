@@ -7,7 +7,7 @@ This is an application that has Instagram's minimal features like creating a pro
 ##  Live Link
 https://mwiksgram.herokuapp.com/ 
 ## Screenshots
-<img src="static/Screenshot from 2021-12-08 07-45-30 png">
+<img src="static/Screenshot from 2021-12-08 07-45-30.png">
 <img src="static/Screenshot from 2021-12-08 07-45-43.png">
 
 ## User Story 
