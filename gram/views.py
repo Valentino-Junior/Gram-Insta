@@ -42,11 +42,6 @@ def profile(request):
 
 @login_required(login_url='/accounts/login/')
 def upload_pic(request):
-    current_user = request.user
-    try:
-        profile = Profile.objects.get(user = current_user)
-    except Profile.DoesNotExist:
-        raise Http404()
     if request.method == "POST":
         form = UploadPicForm(request.POST, request.FILES)
         if form.is_valid():
@@ -55,7 +50,7 @@ def upload_pic(request):
         return redirect('/')
     else:
         form = UploadPicForm()
-    return render(request, 'upload_pic.html', {"form": form,'profile':profile})
+    return render(request, 'upload_pic.html', {"form": form})
 
 @login_required(login_url='/accounts/login/')
 def search_results(request):
